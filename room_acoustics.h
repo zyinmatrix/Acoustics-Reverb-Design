@@ -15,6 +15,7 @@
 //for openGL:
 #define SCALE           (3.0*XDIM/2.0) /* scale to put all objects within view */
 #define SPHERE_RAD      1       /* radius of source, listener, image spheres */
+#define USE_NCURSES true
 
 /* defines a point in 3 dimensions */
 typedef struct {

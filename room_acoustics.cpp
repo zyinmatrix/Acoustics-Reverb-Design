@@ -75,12 +75,35 @@ int main(int argc, char *argv[])
      * open input WAV file and check that it is mono
      */
     //YOUR CODE HERE
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s signal/vega_mono.wav\n", argv[0]);
+        return -1;
+    }
+
+    ifile = argv[1];
+    if ((sfile = sf_open(ifile, SFM_READ, &sfinfo)) == nullptr)
+    {
+        fprintf(stderr, "Cannot read %s\n", ifile);
+        return -1;
+    }
+
+    if (sfinfo.channels != 1)
+    {
+        fprintf(stderr, "%s should be mono\n", ifile);
+        return -1;
+    }
 
     /* allocate buffer to hold input signal, using calloc()
      * buffer must hold the entire signal plus reverb "ring-out" interval
      * that is, (sfinfo.frames + sfinfo.samplerate*MAX_REVERB) * sfinfo.channels) 
      */
     //YOUR CODE HERE
+    signal = (float *)malloc((sfinfo.frames + sfinfo.samplerate*MAX_REVERB) * sfinfo.channels);
+    if (signal == nullptr)
+    {
+        fprintf(stderr, "Error when malloc storage\n");
+    }
 
     /* read input signal 
      * remainder of buffer will be zeros
